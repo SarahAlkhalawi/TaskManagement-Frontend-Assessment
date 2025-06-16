@@ -1,0 +1,24 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<mat-toolbar color="primary" class="navbar">
+  <div class="navbar-content">
+    <div class="logo-section" (click)="navigateToTasks()">
+      <mat-icon>assignment</mat-icon>
+      <span class="app-name">TaskManager</span>
+    </div>
+    
+    <div class="nav-links" *ngIf="isAuthenticated">
+      <button mat-button (click)="navigateToTasks()">
+        <mat-icon>list</mat-icon>
+        My Tasks
+      </button>
+    </div>
+    
+    <div class="user-section" *ngIf="currentUser$ | async as user">
+      <span class="welcome-text">Welcome, {{ user.username }}!</span>
+      <button mat-raised-button color="accent" (click)="logout()" class="logout-btn">
+        <mat-icon>logout</mat-icon>
+        Logout
+      </button>
+    </div>
+  </div>
+</mat-toolbar>

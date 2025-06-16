@@ -1,0 +1,43 @@
+<div class="login-container">
+  <mat-card class="login-card">
+    <mat-card-header>
+      <mat-card-title>Login</mat-card-title>
+      <mat-card-subtitle>Sign in to your account</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Username</mat-label>
+          <input matInput formControlName="username" type="text" placeholder="Enter your username">
+          <mat-error *ngIf="username?.invalid && username?.touched">
+            <span *ngIf="username?.errors?.['required']">Username is required</span>
+            <span *ngIf="username?.errors?.['minlength']">Username must be at least 3 characters</span>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Password</mat-label>
+          <input matInput formControlName="password" type="password" placeholder="Enter your password">
+          <mat-error *ngIf="password?.invalid && password?.touched">
+            <span *ngIf="password?.errors?.['required']">Password is required</span>
+            <span *ngIf="password?.errors?.['minlength']">Password must be at least 6 characters</span>
+          </mat-error>
+        </mat-form-field>
+
+        <div *ngIf="errorMessage" class="error-message">
+          <mat-error>{{ errorMessage }}</mat-error>
+        </div>
+
+        <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid || isLoading" class="login-button">
+          <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
+          <span *ngIf="!isLoading">Login</span>
+        </button>
+      </form>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <p>Don't have an account? <a routerLink="/auth/register">Register here</a></p>
+    </mat-card-actions>
+  </mat-card>
+</div>

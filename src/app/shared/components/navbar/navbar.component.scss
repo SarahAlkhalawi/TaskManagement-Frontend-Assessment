@@ -1,0 +1,145 @@
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.navbar-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 64px;
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
+
+  mat-icon {
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+  }
+
+  .app-name {
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.nav-links {
+  flex: 1;
+  display: flex;
+  gap: 12px;
+  margin-left: 40px;
+
+  button {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+  }
+}
+
+.user-section {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  .welcome-text {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    display: none;
+  }
+
+  .logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-transform: none;
+    letter-spacing: 0.3px;
+    
+    mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+    }
+
+    &:hover {
+      background-color: #d32f2f !important;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+  }
+}
+
+.auth-section {
+  button {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: white;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 8px;
+    
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .user-section .welcome-text {
+    display: block;
+  }
+}
+
+@media (max-width: 767px) {
+  .navbar-content {
+    padding: 0 16px;
+  }
+  
+  .nav-links {
+    margin-left: 20px;
+  }
+
+  .user-section {
+    gap: 12px;
+    
+    .logout-btn {
+      padding: 8px 16px;
+      font-size: 0.85rem;
+    }
+  }
+}

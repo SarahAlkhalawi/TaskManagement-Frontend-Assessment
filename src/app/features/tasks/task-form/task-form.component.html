@@ -1,0 +1,52 @@
+<h2 mat-dialog-title>{{ isEditMode ? 'Edit Task' : 'Create New Task' }}</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="taskForm" class="task-form">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Title</mat-label>
+      <input matInput formControlName="title" placeholder="Enter task title">
+      <mat-error *ngIf="title?.invalid && title?.touched">
+        <span *ngIf="title?.errors?.['required']">Title is required</span>
+        <span *ngIf="title?.errors?.['minlength']">Title must be at least 3 characters</span>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="description" rows="4" placeholder="Enter task description"></textarea>
+      <mat-error *ngIf="description?.invalid && description?.touched">
+        <span *ngIf="description?.errors?.['required']">Description is required</span>
+        <span *ngIf="description?.errors?.['minlength']">Description must be at least 10 characters</span>
+      </mat-error>
+    </mat-form-field>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Priority</mat-label>
+        <mat-select formControlName="priority">
+          <mat-option *ngFor="let priority of priorities" [value]="priority.value">
+            {{ priority.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" *ngIf="isEditMode">
+        <mat-label>Status</mat-label>
+        <mat-select formControlName="status">
+          <mat-option *ngFor="let status of statuses" [value]="status.value">
+            {{ status.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()" [disabled]="isLoading">Cancel</button>
+  <button mat-raised-button color="primary" (click)="onSubmit()"
+          [disabled]="taskForm.invalid || isLoading">
+    <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
+    <span *ngIf="!isLoading">{{ isEditMode ? 'Update' : 'Create' }}</span>
+  </button>
+</mat-dialog-actions>

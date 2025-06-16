@@ -1,0 +1,19 @@
+.task-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 500px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+
+  mat-form-field {
+    flex: 1;
+  }
+}
