@@ -1,0 +1,53 @@
+services:
+  task-management-frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: task-management-frontend
+    ports:
+      - "4200:80"
+    depends_on:
+      - taskmanagement-api
+    networks:
+      - taskmanagement-network
+    restart: unless-stopped
+
+  taskmanagement-api:
+    image: taskmanagement-taskmanagement-api:latest  # Assuming the API image is built 
+    container_name: taskmanagement-api1
+    ports:
+      - "5001:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - ASPNETCORE_URLS=http://+:8080
+      - ConnectionStrings__TaskManagementConnection=Server=sqlserver;Database=TaskManagement;User Id=sa;Password=task@Passw0rd;TrustServerCertificate=true;
+      - Jwt__Key=Task-Management-Tam-Assessment-Sarah
+      - Jwt__Issuer=TaskManagementAPI
+      - Jwt__Audience=TaskManagementClients
+    depends_on:
+      - sqlserver
+    networks:
+      - taskmanagement-network
+    restart: unless-stopped
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: taskmanagement-db1
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=task@Passw0rd
+      - MSSQL_PID=Express
+    ports:
+      - "1434:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    networks:
+      - taskmanagement-network
+    restart: unless-stopped
+
+volumes:
+  sqlserver_data:
+
+networks:
+  taskmanagement-network:
+    driver: bridge

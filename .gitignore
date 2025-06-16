@@ -52,8 +52,3 @@ karma.conf.js
 # Documentation
 README.md
 docs/
-
-# Docker
-Dockerfile
-.dockerignore
-docker-compose*.yml
