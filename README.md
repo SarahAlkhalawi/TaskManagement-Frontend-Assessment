@@ -10,50 +10,113 @@ To start a local development server, run:
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Once the server is running, open your browser and navigate to `http://localhost:4200/`.
 
-## Code scaffolding
+# Task Management Frontend
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+An Angular frontend application for the Task Management, featuring user authentication, task management.
 
-```bash
-ng generate component component-name
+## Features
+
+- **User Authentication**: Login and registration forms with JWT token handling
+- **Task Management**: Complete CRUD interface for tasks
+- **Responsive Design**: Built with Angular
+- **Dockerized**: Containerized deployment with Nginx
+- **API Integration**: Integration with Task Management API backend
+
+## Prerequisites
+
+- **Task Management API Backend** (available as Docker image)
+- **Backend Repository**: [TaskManagement API](https://github.com/SarahAlkhalawi/TaskManagement-API-Assessment)
+
+## Backend Setup
+
+Before running this frontend, you need to set up the backend:
+
+1. **Clone the backend repository**:
+   ```bash
+   git clone https://github.com/SarahAlkhalawi/TaskManagement-API-Assessment.git
+   cd TaskManagement-API-Assessment
+   ```
+
+2. **Build the backend Docker image**:
+   ```bash
+   docker build -t taskmanagement-taskmanagement-api:latest .
+   ```
+
+3. **Or run the backend separately**:
+   ```bash
+   docker-compose up --build
+   ```
+
+## Quick Start
+
+### 1. Clone and Setup
+
+### 2. Verify Backend Image
+
+```powershell
+# Check that backend image exists
+docker images | findstr taskmanagement-taskmanagement-api
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### 3. Run Full Stack
 
 ```bash
-ng generate --help
+docker-compose up --build
 ```
 
-## Building
+### 4. Access Application
 
-To build the project run:
+- **Frontend**: http://localhost:4200
+- **Backend API**: http://localhost:5001
+- **Backend Swagger**: http://localhost:5001/swagger/index.html
+
+## Application Architecture
+
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Frontend      │    │   Backend API   │    │   Database      │
+│   (Angular)     │◄──►│   (.NET Core)   │◄──►│   (SQL Server)  │
+│   Port: 4200    │    │   Port: 5001    │    │   Port: 1434    │
+│   Nginx Proxy   │    │   Container:    │    │   Container:    │
+│                 │    │   api1          │    │   db1           │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+```
+
+## API Integration
+
+### Authentication Flow
+
+1. User logs in through frontend login form
+2. Backend returns JWT token
+3. Frontend stores token and includes in subsequent API requests
+4. Protected routes require valid JWT token
+
+### Available API Endpoints
+
+- `POST /api/auth/register` - User registration
+- `POST /api/auth/login` - User login
+- `GET /api/tasks` - Get all tasks
+- `POST /api/tasks` - Create new task
+- `GET /api/tasks/{id}` - Get specific task
+- `PUT /api/tasks/{id}` - Update task
+- `DELETE /api/tasks/{id}` - Delete task
+
+
+### Docker Commands
 
 ```bash
-ng build
+# Start all services
+docker-compose up --build
+
+# Stop all services
+docker-compose down
+
+# View logs
+docker-compose logs -f task-management-frontend
+docker-compose logs -f taskmanagement-api1
+
+# Remove everything (including data)
+docker-compose down -v
 ```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
